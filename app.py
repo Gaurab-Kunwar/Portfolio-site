@@ -1,29 +1,60 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
 
+# Create the Flask app
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return "Hello Gaurab! Your Flask server is running."
+# Tell Flask where the database file will live
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
 
-@app.route("/about")
-def about():
-    return jsonify({
-        "name": "Gaurab Kunwar",
-        "role": "Python Developer",
-        "skills": ["Python", "Flask", "Git"],
-        "github": "github.com/gaurab-kunwar"
-    })
+# Create the database object
+db = SQLAlchemy(app)
 
-@app.route("/projects")
-def projects():
-    return jsonify([
-        {
-            "name": "Portfolio API",
-            "description": "A REST API built with Flask",
-            "tech": ["Python", "Flask"]
+# Define a Project table in the database
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    tech = db.Column(db.String(100), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "tech": self.tech
         }
-    ])
+
+# Create the database and tables
+with app.app_context():
+    db.create_all()
+
+# GET all projects
+@app.route("/projects")
+def get_projects():
+    projects = Project.query.all()
+    return jsonify([p.to_dict() for p in projects])
+
+# POST - add a new project
+@app.route("/projects", methods=["POST"])
+def add_project():
+    data = request.get_json()
+    new_project = Project(
+        name=data["name"],
+        description=data["description"],
+        tech=data["tech"]
+    )
+    db.session.add(new_project)
+    db.session.commit()
+    return jsonify(new_project.to_dict()), 201
+
+# DELETE a project
+@app.route("/projects/<int:id>", methods=["DELETE"])
+def delete_project(id):
+    project = Project.query.get(id)
+    db.session.delete(project)
+    db.session.commit()
+    return jsonify({"message": "Project deleted"})
 
 if __name__ == "__main__":
     app.run(debug=True)
