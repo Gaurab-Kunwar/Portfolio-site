@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 # Create the Flask app
@@ -29,11 +29,15 @@ class Project(db.Model):
 with app.app_context():
     db.create_all()
 
+@app.route("/home")
+@app.route("/")
+def home():
+    return render_template("home.html")
 # GET all projects
 @app.route("/projects")
 def get_projects():
     projects = Project.query.all()
-    return jsonify([p.to_dict() for p in projects])
+    return render_template("projects.html", projects=projects)
 
 # POST - add a new project
 @app.route("/projects", methods=["POST"])
