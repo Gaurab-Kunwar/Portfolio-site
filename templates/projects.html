@@ -51,12 +51,6 @@
             display: inline-block;
         }
 
-        .back {
-            display: inline-block;
-            margin-top: 30px;
-            color: #888;
-            text-decoration: none;
-        }
 
         .back:hover { color: #fff; }
     </style>
@@ -73,6 +67,7 @@
     </div>
     {% endfor %}
 
-    <a href="/" class="back">← Back to home</a>
+    <a href="/" class="btn" style="text-decoration:none; padding: 10px 20px;">← Back to home</a><br>
+    <a href="/add" class="btn" style="text-decoration:none; padding: 10px 20px;">+ Add Project</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 # Create the Flask app
@@ -59,6 +59,19 @@ def delete_project(id):
     db.session.delete(project)
     db.session.commit()
     return jsonify({"message": "Project deleted"})
+
+#add a project using form
+@app.route("/add", methods=["GET", "POST"])
+def app_projects_form():
+    if request.method == "POST":
+        name = request.form["name"]
+        description = request.form["description"]
+        tech = request.form["tech"]
+        new_project = Project(name=name, description=description, tech=tech)
+        db.session.add(new_project)
+        db.session.commit()
+        return redirect("/projects")
+    return render_template("add_project.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
