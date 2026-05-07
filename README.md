@@ -1,6 +1,6 @@
-# Portfolio API
+# Portfolio Site
 
-A Simple API built with Python and Flask.
+A Simple web application built with Python and Flask.
 
 ## Endpoints
 - `GET /` - Home
@@ -10,5 +10,6 @@ A Simple API built with Python and Flask.
 ## Stuff used
 -python
 -FLask
+-html
 
 
