@@ -1,101 +1,163 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Project</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Project | Gaurab Kunwar</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f0f0f;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      body {
+        font-family:
+          "Segoe UI",
+          -apple-system,
+          BlinkMacSystemFont,
+          Roboto,
+          sans-serif;
+        background: #0f0f0f;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
 
-        .container {
-            background: #1a1a1a;
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid #2a2a2a;
-            width: 100%;
-            max-width: 480px;
-        }
+      .container {
+        background: #161616;
+        padding: 40px;
+        border-radius: 16px;
+        border: 1px solid #222;
+        width: 100%;
+        max-width: 480px;
+      }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 24px;
-        }
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+      }
 
-        label {
-            display: block;
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-        }
+      label {
+        display: block;
+        color: #888;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        font-weight: 500;
+      }
 
-        input {
-            width: 100%;
-            background: #0f0f0f;
-            border: 1px solid #2a2a2a;
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
+      input {
+        width: 100%;
+        background: #0f0f0f;
+        border: 1px solid #2a2a2a;
+        color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        transition: border-color 0.2s ease;
+      }
 
-        input:focus {
-            outline: none;
-            border-color: #555;
-        }
+      input:focus {
+        outline: none;
+        border-color: #555;
+      }
 
-        .btn {
-            width: 100%;
-            background: #fff;
-            color: #0f0f0f;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+      /* Subtle styling override for browser placeholder text color */
+      input::placeholder {
+        color: #444;
+      }
 
-        .btn:hover { background: #ccc; }
+      .btn {
+        width: 100%;
+        background: #fff;
+        color: #0f0f0f;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          transform 0.1s ease;
+      }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 16px;
-            color: #888;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
+      .btn:hover {
+        background: #e0e0e0;
+      }
 
-        .back:hover { color: #fff; }
+      .btn:active {
+        transform: scale(0.99);
+      }
+
+      .back {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+      }
+
+      .back:hover {
+        color: #fff;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Add Project</h1>
-        <form method="POST">
-            <label>Project Name</label>
-            <input type="text" name="name" placeholder="e.g. Portfolio API">
+      <h1>Add Project</h1>
 
-            <label>Description</label>
-            <input type="text" name="description" placeholder="What does it do?">
+      <!-- The action is blank, meaning it POSTs right back to our Flask endpoint naturally -->
+      <form method="POST">
+        <label for="name">Project Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="e.g. Portfolio API"
+          required
+        />
 
-            <label>Tech Used</label>
-            <input type="text" name="tech" placeholder="e.g. Python, Flask">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="What does it do?"
+          required
+        />
 
-            <button type="submit" class="btn">Add Project</button>
-        </form>
-        <a href="/projects" class="back">← Back to projects</a>
+        <label for="tech">Tech Used</label>
+        <input
+          type="text"
+          id="tech"
+          name="tech"
+          placeholder="e.g. Python, Flask"
+          required
+        />
+
+        <label for="github_url">GitHub Link (Optional)</label>
+        <input
+          type="url"
+          id="github_url"
+          name="github_url"
+          placeholder="https://github.com/yourusername/repo"
+        />
+
+        <button type="submit" class="btn">Add Project</button>
+      </form>
+
+      <!-- Dynamic Flask link back to the HTML list route -->
+      <a href="{{ url_for('get_projects_html') }}" class="back"
+        >← Back to projects</a
+      >
     </div>
-</body>
+  </body>
 </html>

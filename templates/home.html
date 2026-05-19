@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Gaurab Kunwar | Portfolio</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background: #0f0f0f;
             color: #ffffff;
             display: flex;
@@ -19,11 +19,13 @@
 
         .container {
             text-align: center;
+            padding: 20px;
         }
 
         h1 {
             font-size: 3rem;
             margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         p {
@@ -40,10 +42,17 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 1rem;
+            transition: background 0.2s ease, transform 0.1s ease;
+            display: inline-block;
         }
 
         .btn:hover {
-            background: #ccc;
+            background: #e0e0e0;
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -51,7 +60,8 @@
     <div class="container">
         <h1>Gaurab Kunwar</h1>
         <p>Python Developer · Building cool stuff</p>
-        <a href="/projects" class="btn">View Projects</a>
+        <!-- Using Jinja2 dynamic routing instead of a hardcoded path -->
+        <a href="{{ url_for('get_projects_html') }}" class="btn">View Projects</a>
     </div>
 </body>
 </html>

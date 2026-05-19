@@ -1,73 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | Gaurab Kunwar</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f0f0f;
-            color: #ffffff;
-            padding: 40px;
-        }
+      body {
+        font-family:
+          "Segoe UI",
+          -apple-system,
+          BlinkMacSystemFont,
+          Roboto,
+          sans-serif;
+        background: #0f0f0f;
+        color: #ffffff;
+        padding: 40px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+      }
 
-        .subtitle {
-            color: #888;
-            margin-bottom: 40px;
-        }
+      .subtitle {
+        color: #888;
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+      }
 
-        .card {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid #2a2a2a;
-        }
+      .card {
+        background: #161616;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 20px;
+        border: 1px solid #222;
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease;
+      }
 
-        .card h2 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-        }
+      .card:hover {
+        border-color: #444;
+        transform: translateY(-2px);
+      }
 
-        .card p {
-            color: #888;
-            margin-bottom: 12px;
-        }
+      .card h2 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
 
-        .tech {
-            background: #2a2a2a;
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: inline-block;
-        }
+      .card p {
+        color: #aaa;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .card-footer {
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
+      .github-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
 
-        .back:hover { color: #fff; }
+      .github-link:hover {
+        color: #888; /* Dims slightly on hover */
+      }
+
+      .tech {
+        background: #262626;
+        color: #e0e0e0;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        display: inline-block;
+        font-weight: 500;
+      }
+
+      /* Group actions container */
+      .actions {
+        margin-top: 40px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.95rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background: #ffffff;
+        color: #0f0f0f;
+        padding: 12px 24px;
+      }
+
+      .btn-primary:hover {
+        background: #e0e0e0;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #888;
+        padding: 12px 16px;
+      }
+
+      .btn-secondary:hover {
+        color: #ffffff;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Projects</h1>
     <p class="subtitle">Things I have built</p>
 
+    <!-- If there are no projects in the database yet -->
+    {% if not projects %}
+    <p style="color: #555; font-style: italic; margin-bottom: 30px">
+      No projects added yet.
+    </p>
+    {% endif %}
+
+    <!-- Loop through all available projects -->
     {% for project in projects %}
     <div class="card">
-        <h2>{{ project.name }}</h2>
-        <p>{{ project.description }}</p>
+      <h2>{{ project.name }}</h2>
+      <p>{{ project.description }}</p>
+
+      <div class="card-footer">
         <span class="tech">{{ project.tech }}</span>
+
+        <!-- Only renders the link if a github_url was actually provided -->
+        {% if project.github_url %}
+        <a
+          href="{{ project.github_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="github-link"
+        >
+          View Code &rarr;
+        </a>
+        {% endif %}
+      </div>
     </div>
     {% endfor %}
 
-    <a href="/" class="btn" style="text-decoration:none; padding: 10px 20px;">← Back to home</a><br>
-    <a href="/add" class="btn" style="text-decoration:none; padding: 10px 20px;">+ Add Project</a>
-</body>
+    <!-- Action links grouped neatly at the bottom -->
+    <div class="actions">
+      <a href="{{ url_for('add_project_form') }}" class="btn btn-primary"
+        >+ Add Project</a
+      >
+      <a href="{{ url_for('home') }}" class="btn btn-secondary"
+        >← Back to home</a
+      >
+    </div>
+  </body>
 </html>
